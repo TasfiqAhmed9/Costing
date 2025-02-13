@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "291634206670",
+    "project_id": "costing-f3207",
+    "storage_bucket": "costing-f3207.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:291634206670:android:6793e30eaf792fd4497d9f",
+        "android_client_info": {
+          "package_name": "com.example.costing"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB89q7yef812egpKIUV9_Kb4xphRUV33K4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
