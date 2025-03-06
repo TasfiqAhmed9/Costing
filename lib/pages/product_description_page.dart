@@ -49,7 +49,7 @@ class ProductDescriptionPage extends StatelessWidget {
               height: 3,
             ),
             Text(
-              '10',
+              'price: 10/kg',
               // 'Rs : ${product.price ?? ''}',
               style: TextStyle(
                   fontSize: 20,

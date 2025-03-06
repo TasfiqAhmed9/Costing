@@ -1,3 +1,4 @@
+import 'package:costing/controller/facebook_signin_controller.dart';
 import 'package:costing/controller/google_signin_controller.dart';
 import 'package:costing/controller/sign_up_controller.dart';
 import 'package:costing/pages/login_page.dart';
@@ -40,6 +41,8 @@ class _SignupPageState extends State<SignupPage> {
   //     print("Google Sign-In Error: $error");
   //   }
   // }
+  final FacebookSigninController _facebookSigninController =
+      Get.put(FacebookSigninController());
 
   // Facebook Sign-In
   // Future<void> _signInWithFacebook() async {
@@ -83,7 +86,8 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                   TextField(
                     controller: username,
-                    keyboardType: TextInputType.phone,
+                    // keyboardType: TextInputType.phone
+                    keyboardType: TextInputType.name,
                     decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
@@ -97,7 +101,8 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                   TextField(
                     controller: userPhone,
-                    keyboardType: TextInputType.phone,
+                    // keyboardType: TextInputType.phone
+                    keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
@@ -111,7 +116,8 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                   TextField(
                     controller: userEmail,
-                    keyboardType: TextInputType.phone,
+                    // keyboardType: TextInputType.phone,
+                    keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
@@ -165,24 +171,22 @@ class _SignupPageState extends State<SignupPage> {
                           phone.isEmpty ||
                           email.isEmpty ||
                           password.isEmpty) {
-                        Get.snackbar(
-                          "Error",
-                          "Please enter all details",
-                          snackPosition: SnackPosition.BOTTOM,colorText: Colors.red
-                        );
+                        Get.snackbar("Error", "Please enter all details",
+                            snackPosition: SnackPosition.BOTTOM,
+                            colorText: Colors.red);
                       } else {
                         UserCredential? userCredential =
                             await signUpController.signUpMethod(
                                 name, email, phone, password, userDeviceToken);
 
                         if (userCredential != null) {
-                          Get.snackbar(
-                            "Verification email sent.",
-                            "Please check your email.",
-                            snackPosition: SnackPosition.BOTTOM,colorText: Colors.green
-                            // backgroundColor: AppConstant.appScendoryColor,
-                            // colorText: AppConstant.appTextColor,
-                          );
+                          Get.snackbar("Verification email sent.",
+                              "Please check your email.",
+                              snackPosition: SnackPosition.BOTTOM,
+                              colorText: Colors.green
+                              // backgroundColor: AppConstant.appScendoryColor,
+                              // colorText: AppConstant.appTextColor,
+                              );
 
                           FirebaseAuth.instance.signOut();
                           Get.offAll(() => LoginPage());
@@ -222,6 +226,7 @@ class _SignupPageState extends State<SignupPage> {
                       children: [
                         GestureDetector(
                           onTap: () {
+                            _facebookSigninController.signInWithFacebook();
                             // _signInWithFacebook();
                           },
                           child: CircleAvatar(

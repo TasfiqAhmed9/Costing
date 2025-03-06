@@ -1,4 +1,5 @@
 import 'package:costing/widgets/drop_down_btn.dart';
+import 'package:costing/widgets/fabrics_widget.dart';
 import 'package:costing/widgets/multiselect_dropdown_button.dart';
 import 'package:flutter/material.dart';
 
@@ -57,7 +58,7 @@ class DamiProductdescriptionPage extends StatelessWidget {
               height: 3,
             ),
 
-            Text("12"),
+            // Text("12"),
             // Text(
             //   'Rs : ${product.price ?? ''}',
             //   style: TextStyle(
@@ -65,6 +66,41 @@ class DamiProductdescriptionPage extends StatelessWidget {
             //       fontWeight: FontWeight.bold,
             //       color: Colors.green),
             // ),
+            SizedBox(
+              height: 20,
+            ),
+
+            SizedBox(
+              height: 160,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  return FabricsWidget();
+                  // return InkWell(
+                  //   onTap: () {
+                  //     // ctrl.filterByCategory(
+                  //     //     ctrl.productCategory[index].name ?? '');
+                  //   },
+                  //   child: Padding(
+                  //     padding: EdgeInsets.all(5),
+                  //     child: Chip(
+                  //       label: Text('category'
+                  //           // ctrl.productCategory[index].name ?? 'Error',
+                  //           // style: TextStyle(fontWeight: FontWeight.bold),
+                  //           ),
+                  //     ),
+                  //   ),
+                  // );
+                },
+                itemCount: 10,
+                // ctrl.productCategory.length,
+              ),
+            ),
+
+            // FabricsWidget(),
+
+            // SizedBox(child: FabricsWidget()),
+
             SizedBox(
               height: 20,
             ),
@@ -82,7 +118,7 @@ class DamiProductdescriptionPage extends StatelessWidget {
             // ),
 
             TextField(
-              keyboardType: TextInputType.phone,
+              keyboardType: TextInputType.text,
               decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
@@ -163,7 +199,7 @@ class DamiProductdescriptionPage extends StatelessWidget {
             ),
 
             TextField(
-              keyboardType: TextInputType.phone,
+              keyboardType: TextInputType.text,
               decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
@@ -184,61 +220,85 @@ class DamiProductdescriptionPage extends StatelessWidget {
               height: 20,
             ),
 
-            TextField(
-              keyboardType: TextInputType.phone,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  // prefixIcon: Icon(Icons.shopify_sharp),
-                  labelText: 'RMG Cost',
-                  hintText: 'RMG Cost'),
-            ),
+            Text("RMG Cost"),
+            // Text(
+            //   product.description ?? '',
+            //   style: TextStyle(fontSize: 20, height: 1.9),
+            // ),
+
+            // TextField(
+            //   keyboardType: TextInputType.phone,
+            //   decoration: InputDecoration(
+            //       border: OutlineInputBorder(
+            //         borderRadius: BorderRadius.circular(15),
+            //       ),
+            //       // prefixIcon: Icon(Icons.shopify_sharp),
+            //       labelText: 'RMG Cost',
+            //       hintText: 'RMG Cost'),
+            // ),
 
             SizedBox(
               height: 20,
             ),
 
-            TextField(
-              keyboardType: TextInputType.phone,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  // prefixIcon: Icon(Icons.shopify_sharp),
-                  labelText: 'Special Costing',
-                  hintText: 'Special Costing'),
-            ),
+            Text("Special Costing"),
+            // Text(
+            //   product.description ?? '',
+            //   style: TextStyle(fontSize: 20, height: 1.9),
+            // ),
+
+            // TextField(
+            //   keyboardType: TextInputType.phone,
+            //   decoration: InputDecoration(
+            //       border: OutlineInputBorder(
+            //         borderRadius: BorderRadius.circular(15),
+            //       ),
+            //       // prefixIcon: Icon(Icons.shopify_sharp),
+            //       labelText: 'Special Costing',
+            //       hintText: 'Special Costing'),
+            // ),
 
             SizedBox(
               height: 20,
             ),
 
-            TextField(
-              keyboardType: TextInputType.phone,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  // prefixIcon: Icon(Icons.shopify_sharp),
-                  labelText: 'Shipping Cost',
-                  hintText: 'Shipping Cost'),
-            ),
+            Text("Shipping Cost"),
+            // Text(
+            //   product.description ?? '',
+            //   style: TextStyle(fontSize: 20, height: 1.9),
+            // ),
+
+            // TextField(
+            //   keyboardType: TextInputType.phone,
+            //   decoration: InputDecoration(
+            //       border: OutlineInputBorder(
+            //         borderRadius: BorderRadius.circular(15),
+            //       ),
+            //       // prefixIcon: Icon(Icons.shopify_sharp),
+            //       labelText: 'Shipping Cost',
+            //       hintText: 'Shipping Cost'),
+            // ),
 
             SizedBox(
               height: 20,
             ),
 
-            TextField(
-              keyboardType: TextInputType.phone,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  // prefixIcon: Icon(Icons.shopify_sharp),
-                  labelText: 'Buying House Commision',
-                  hintText: 'Buying House Commision'),
-            ),
+            Text("Buying House Commision"),
+            // Text(
+            //   product.description ?? '',
+            //   style: TextStyle(fontSize: 20, height: 1.9),
+            // ),
+
+            // TextField(
+            //   keyboardType: TextInputType.phone,
+            //   decoration: InputDecoration(
+            //       border: OutlineInputBorder(
+            //         borderRadius: BorderRadius.circular(15),
+            //       ),
+            //       // prefixIcon: Icon(Icons.shopify_sharp),
+            //       labelText: 'Buying House Commision',
+            //       hintText: 'Buying House Commision'),
+            // ),
 
             SizedBox(
               height: 20,

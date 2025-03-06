@@ -1,4 +1,6 @@
+import 'package:costing/controller/get_user_data_controller.dart';
 import 'package:costing/controller/sign_in_controller.dart';
+import 'package:costing/pages/forget_password.dart';
 import 'package:costing/pages/signup_page.dart';
 import 'package:costing/pages/start_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,6 +17,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final SignInController signInController = Get.put(SignInController());
+  final GetUserDataController getUserDataController =
+      Get.put(GetUserDataController());
   TextEditingController userEmail = TextEditingController();
   TextEditingController userPassword = TextEditingController();
   bool _isPasswordVisible = false;
@@ -31,20 +35,44 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  'Welcome',
-                  style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.deepPurple),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Welcome',
+                    style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.deepPurple),
+                  ),
                 ),
+                CircleAvatar(
+                  backgroundColor: Colors.green,
+                  radius: 60,
+                  child: CircleAvatar(
+                    backgroundColor: Colors.greenAccent[100],
+                    radius: 55,
+                    child: CircleAvatar(
+                      backgroundImage: AssetImage('assets/logo/pak.jpeg'),
+                      radius: 100,
+                      //   NetworkImage(
+                      //       'https://plus.unsplash.com/premium_photo-1689568126014-06fea9d5d341?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D'
+                      //       // "https://pbs.twimg.com/profile_images/1304985167476523008/QNHrwL2q_400x400.jpg"
+                      //       ), //NetworkImage
+                      //   radius: 100,
+                    ), //CircleAvatar
+                  ), //CircleAvatar
+                ),
+                // SizedBox(
+                //   height: 200,
+                // ),
                 SizedBox(
-                  height: 200,
+                  height: 100,
                 ),
                 TextField(
                   controller: userEmail,
                   // controller: ctrl.loginNumberController,
-                  keyboardType: TextInputType.phone,
+                  // keyboardType: TextInputType.phone,
+                  keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
@@ -61,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
                   // controller: ctrl.loginNumberController,
                   obscureText:
                       !_isPasswordVisible, // Show or hide password based on the boolean value
-                  keyboardType: TextInputType.phone,
+                  keyboardType: TextInputType.visiblePassword,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
@@ -93,7 +121,7 @@ class _LoginPageState extends State<LoginPage> {
                   alignment: Alignment.centerRight,
                   child: GestureDetector(
                     onTap: () {
-                      // Get.to(() => ForgetPasswordScreen());
+                      Get.to(() => ForgetPassword());
                     },
                     child: Text(
                       "Forget Password?",
@@ -111,106 +139,159 @@ class _LoginPageState extends State<LoginPage> {
                       backgroundColor: Colors.deepPurple),
                   child: Text('Login'),
                   onPressed: () async {
-                    // Get.to(
-                    //   StartPage(),
-                    // );
-                    Get.offAll(() => StartPage());
-                    // Navigator.of(context).push(
-                    //     MaterialPageRoute(builder: (context) => (StartPage())));
                     String email = userEmail.text.trim();
                     String password = userPassword.text.trim();
+
                     if (email.isEmpty || password.isEmpty) {
-                      Get.snackbar("Error", "Please enter all details");
+                      Get.snackbar(
+                        "Error",
+                        "Please enter all details",
+                        snackPosition: SnackPosition.BOTTOM,
+                        // backgroundColor: AppConstant.appScendoryColor,
+                        // colorText: AppConstant.appTextColor,
+                      );
                     } else {
                       UserCredential? userCredential =
                           await signInController.signInMethod(email, password);
+
+                      var userData = await getUserDataController
+                          .getUserData(userCredential!.user!.uid);
+
                       if (userCredential != null) {
                         if (userCredential.user!.emailVerified) {
-                          Get.snackbar("Success", "login Successfully");
+                          //
+                          if (userData == true) {
+                            Get.snackbar(
+                              "Success Login",
+                              "login Successfully!",
+                              snackPosition: SnackPosition.BOTTOM,
+                              // backgroundColor: AppConstant.appScendoryColor,
+                              // colorText: AppConstant.appTextColor,
+                            );
+                            Get.offAll(() => StartPage());
+                          } else {
+                            Get.offAll(() => StartPage());
+                            Get.snackbar(
+                              "Success User Login",
+                              "login Successfully!",
+                              snackPosition: SnackPosition.BOTTOM,
+                              // backgroundColor: AppConstant.appScendoryColor,
+                              // colorText: AppConstant.appTextColor,
+                            );
+                          }
                         } else {
                           Get.snackbar(
                             "Error",
                             "Please verify your email before login",
+                            snackPosition: SnackPosition.BOTTOM,
+                            // backgroundColor: AppConstant.appScendoryColor,
+                            // colorText: AppConstant.appTextColor,
                           );
                         }
                       } else {
-                        Get.snackbar("Error", "Please try again");
+                        Get.snackbar(
+                          "Error",
+                          "Please try again",
+                          snackPosition: SnackPosition.BOTTOM,
+                          // backgroundColor: AppConstant.appScendoryColor,
+                          // colorText: AppConstant.appTextColor,
+                        );
                       }
                     }
-                    // ),
-                    // );
-                    // String email = userEmail.text.trim();
-                    // String password = userPassword.text.trim();
-                    // if (email.isEmpty || password.isEmpty) {
-                    //   Get.snackbar(
-                    //     "Error",
-                    //     "Please enter all details",
-                    //     snackPosition: SnackPosition.BOTTOM,
-                    //     // backgroundColor: AppConstant.appScendoryColor,
-                    //     // colorText: AppConstant.appTextColor,
-                    //   );
-                    // } else {
-                    //   UserCredential? userCredential =
-                    //       await signInController.signInMethod(email, password);
-
-                    //   // var userData = await getUserDataController
-                    //   //     .getUserData(userCredential!.user!.uid);
-
-                    //   if (userCredential != null) {
-                    //     if (userCredential.user!.emailVerified) {
-                    //       Get.snackbar(
-                    //         "Success",
-                    //         "login Successfully",
-                    //         snackPosition: SnackPosition.BOTTOM,
-                    //         // backgroundColor: AppConstant.appScendoryColor,
-                    //         // colorText: AppConstant.appTextColor,
-                    //       );
-                    //       //
-                    //       // if (userData[0]['isAdmin'] == true) {
-                    //       //   Get.snackbar(
-                    //       //     "Success Admin Login",
-                    //       //     "login Successfully!",
-                    //       //     snackPosition: SnackPosition.BOTTOM,
-                    //       //     backgroundColor: AppConstant.appScendoryColor,
-                    //       //     colorText: AppConstant.appTextColor,
-                    //       //   );
-                    //       //   Get.offAll(() => AdminMainScreen());
-                    //       // } else {
-                    //       //   // Get.offAll(() => MainScreen());
-                    //       //   Get.snackbar(
-                    //       //     "Success User Login",
-                    //       //     "login Successfully!",
-                    //       //     snackPosition: SnackPosition.BOTTOM,
-                    //       //     // backgroundColor: AppConstant.appScendoryColor,
-                    //       //     // colorText: AppConstant.appTextColor,
-                    //       //   );
-                    //       // }
-                    //     } else {
-                    //       Get.snackbar(
-                    //         "Error",
-                    //         "Please verify your email before login",
-                    //         snackPosition: SnackPosition.BOTTOM,
-                    //         // backgroundColor: AppConstant.appScendoryColor,
-                    //         // colorText: AppConstant.appTextColor,
-                    //       );
-                    //     }
-                    //   } else {
-                    //     Get.snackbar(
-                    //       "Error",
-                    //       "Please try again",
-                    //       snackPosition: SnackPosition.BOTTOM,
-                    //       // backgroundColor: AppConstant.appScendoryColor,
-                    //       // colorText: AppConstant.appTextColor,
-                    //     );
-                    //   }
-                    // }
                   },
-                  // {
-                  //     GetSnackBar();
-                  //   } else {}
-                  //   // Get.to(StartPage());
-                  //   // ctrl.loginWithPhone();
-                  // },)
+                  // onPressed: () async {
+                  //     String email = userEmail.text.trim();
+                  //     String password = userPassword.text.trim();
+
+                  //     if (email.isEmpty || password.isEmpty) {
+                  //       Get.snackbar(
+                  //         "Error",
+                  //         "Please enter all details",
+                  //         snackPosition: SnackPosition.BOTTOM,
+                  //         // backgroundColor: AppConstant.appScendoryColor,
+                  //         // colorText: AppConstant.appTextColor,
+                  //       );
+                  //     } else {
+                  //       UserCredential? userCredential = await signInController
+                  //           .signInMethod(email, password);
+
+                  // var userData = await getUserDataController
+                  //     .getUserData(userCredential!.user!.uid);
+
+                  //       if (userCredential != null) {
+                  //         if (userCredential.user!.emailVerified) {
+                  //           //
+                  //           if (userData[0]['isAdmin'] == true) {
+                  //             Get.snackbar(
+                  //               "Success Admin Login",
+                  //               "login Successfully!",
+                  //               snackPosition: SnackPosition.BOTTOM,
+                  //               // backgroundColor: AppConstant.appScendoryColor,
+                  //               // colorText: AppConstant.appTextColor,
+                  //             );
+                  //             Get.offAll(() => AdminMainScreen());
+                  //           } else {
+                  //             Get.offAll(() => MainScreen());
+                  //             Get.snackbar(
+                  //               "Success User Login",
+                  //               "login Successfully!",
+                  //               snackPosition: SnackPosition.BOTTOM,
+                  //               backgroundColor: AppConstant.appScendoryColor,
+                  //               colorText: AppConstant.appTextColor,
+                  //             );
+                  //           }
+                  //         } else {
+                  //           Get.snackbar(
+                  //             "Error",
+                  //             "Please verify your email before login",
+                  //             snackPosition: SnackPosition.BOTTOM,
+                  //             backgroundColor: AppConstant.appScendoryColor,
+                  //             colorText: AppConstant.appTextColor,
+                  //           );
+                  //         }
+                  //       } else {
+                  //         Get.snackbar(
+                  //           "Error",
+                  //           "Please try again",
+                  //           snackPosition: SnackPosition.BOTTOM,
+                  //           backgroundColor: AppConstant.appScendoryColor,
+                  //           colorText: AppConstant.appTextColor,
+                  //         );
+                  //       }
+                  //     }
+                  //   },
+
+                  //   onPressed: () async {
+                  //     Get.offAll(() => StartPage());
+                  //     String email = userEmail.text.trim();
+                  //     String password = userPassword.text.trim();
+                  //     if (email.isEmpty || password.isEmpty) {
+                  //       Get.snackbar("Error", "Please enter all details");
+                  //     } else {
+                  //       UserCredential? userCredential = await
+                  //           signInController.signInMethod(email, password);
+                  //       // var userData = await getUserDataController
+                  //       //     .getUserData(userCredential!.user!.uid);
+                  //       // UserCredential? userCredential =
+                  //       //     await signInController.signInMethod(email, password);
+
+                  //       //     var userData = await getUserDataController
+                  //       // .getUserData(userCredential!.user!.uid);
+
+                  //       if (userCredential != null) {
+                  //         if (userCredential.user!.emailVerified) {
+                  //           Get.snackbar("Success", "login Successfully");
+                  //         } else {
+                  //           Get.snackbar(
+                  //             "Error",
+                  //             "Please verify your email before login",
+                  //           );
+                  //         }
+                  //       } else {
+                  //         Get.snackbar("Error", "Please try again");
+                  //       }
+                  //     }
+                  //   },
                 ),
 
                 SizedBox(
@@ -253,3 +334,65 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 }
+
+// onPressed: () async {
+//                     String email = userEmail.text.trim();
+//                     String password = userPassword.text.trim();
+
+//                     if (email.isEmpty || password.isEmpty) {
+//                       Get.snackbar(
+//                         "Error",
+//                         "Please enter all details",
+//                         snackPosition: SnackPosition.BOTTOM,
+//                         // backgroundColor: AppConstant.appScendoryColor,
+//                         // colorText: AppConstant.appTextColor,
+//                       );
+//                     } else {
+//                       UserCredential? userCredential =
+//                           await signInController.signInMethod(email, password);
+
+//                       // var userData = await getUserDataController
+//                       //     .getUserData(userCredential!.user!.uid);
+
+//                       if (userCredential != null) {
+//                         if (userCredential.user!.emailVerified) {
+//                           //
+//                           // if (userData == true) {
+//                           Get.snackbar(
+//                             "Success Login",
+//                             "login Successfully!",
+//                             snackPosition: SnackPosition.BOTTOM,
+//                             // backgroundColor: AppConstant.appScendoryColor,
+//                             // colorText: AppConstant.appTextColor,
+//                           );
+//                           Get.offAll(() => StartPage());
+//                           //   Get.offAll(() => SignupPage());
+//                           // } else {
+//                           //   Get.offAll(() => StartPage());
+//                           //   Get.snackbar(
+//                           //     "Success User Login",
+//                           //     "login Successfully!",
+//                           //     snackPosition: SnackPosition.BOTTOM,
+//                           //     // backgroundColor: AppConstant.appScendoryColor,
+//                           //     // colorText: AppConstant.appTextColor,
+//                           //   );
+//                           // }
+//                         } else {
+//                           Get.snackbar(
+//                             "Error",
+//                             "Please verify your email before login",
+//                             snackPosition: SnackPosition.BOTTOM,
+//                             // backgroundColor: AppConstant.appScendoryColor,
+//                             // colorText: AppConstant.appTextColor,
+//                           );
+//                         }
+//                       } else {
+//                         Get.snackbar(
+//                           "Error",
+//                           "Please try again",
+//                           snackPosition: SnackPosition.BOTTOM,
+//                           // backgroundColor: AppConstant.appScendoryColor,
+//                           // colorText: AppConstant.appTextColor,
+//                         );
+//                       }
+//                     }

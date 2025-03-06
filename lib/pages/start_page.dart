@@ -1,8 +1,8 @@
 import 'package:costing/pages/home_page.dart';
-// import 'package:costing/pages/product_description_page.dart';
+import 'package:costing/widgets/custom_drawer_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 // import 'package:g_calculation/pages/home_page.dart';
-// import 'package:g_calculation/pages/product_description_page.dart';
 // import 'package:g_calculation/pages/product_description_page.dart';
 
 class StartPage extends StatelessWidget {
@@ -15,13 +15,16 @@ class StartPage extends StatelessWidget {
         backgroundColor: Colors.blue,
         centerTitle: true,
         title: Text("Garments Costing"),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.settings),
-          ),
-        ],
+        // actions: [
+        //   IconButton(
+        //     onPressed: () {
+        //       CustomDrawerWidget();
+        //     },
+        //     icon: Icon(Icons.settings),
+        //   ),
+        // ],
       ),
+      drawer: CustomDrawerWidget(),
       body: Container(
         width: double.maxFinite,
         padding: EdgeInsets.all(20),
@@ -34,11 +37,12 @@ class StartPage extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => HomePage(),
-                        ),
-                      );
+                      Get.to(HomePage());
+                      // Navigator.of(context).push(
+                      //   MaterialPageRoute(
+                      //     builder: (context) => HomePage(),
+                      // ),
+                      // );
                     },
                     child: Text("Knit Fabric"),
                   ),

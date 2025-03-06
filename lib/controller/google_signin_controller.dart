@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:costing/controller/get_device_token_contoller.dart';
 import 'package:costing/model/user_model.dart';
 import 'package:costing/pages/start_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,6 +12,8 @@ class GoogleSigninController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<void> signInWithGoogle() async {
+    final GetDeviceTokenContoller getDeviceTokenContoller =
+        Get.put(GetDeviceTokenContoller());
     try {
       final GoogleSignInAccount? googleSignInAccount =
           await googleSignIn.signIn();
@@ -36,10 +39,12 @@ class GoogleSigninController extends GetxController {
             uId: user.uid,
             username: user.displayName.toString(),
             email: user.email.toString(),
-            phone: user.phoneNumber.toString(),
-            userImg: user.photoURL.toString(),
-            userDeviceToken: '',
-            // userDeviceToken: getDeviceTokenController.deviceToken.toString(),
+            phone: '',
+            // user.phoneNumber.toString(),
+            userImg: '',
+            // user.photoURL.toString(),
+            // userDeviceToken: '',
+            userDeviceToken: getDeviceTokenContoller.deviceToken.toString(),
             country: '',
             createdOn: DateTime.now(),
           );

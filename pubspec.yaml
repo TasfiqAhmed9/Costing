@@ -45,6 +45,13 @@ dependencies:
   json_annotation: ^4.9.0
   flutter_keyboard_visibility: ^6.0.0
   flutter_easyloading: ^3.0.5
+  cached_network_image: ^3.4.1
+  image_card: ^0.0.4
+  firebase_messaging: ^15.2.3
+  url_launcher: ^6.3.1
+  image_picker: ^1.1.2
+  firebase_storage: ^12.4.4
+
 
 dev_dependencies:
   flutter_test:
@@ -75,6 +82,9 @@ flutter:
     - assets/logo/pak.jpeg
     - assets/logo/fab.jpeg
     - assets/logo/goo.png
+    - assets/logo/wap.png
+    - assets/logo/phone.png
+    - assets/logo/email.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
